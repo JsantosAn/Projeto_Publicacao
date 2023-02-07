@@ -6,7 +6,7 @@ owlrl==6.0.2
 pandas==1.3.2
 rdflib==6.0.2
 requests==2.26.0
-scholarly==1.5.0
+scholarly==1.7.11
 semanticscholar==0.2.1
 SPARQLWrapper==1.8.5
 sslproxies==0.1.0
