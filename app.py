@@ -179,7 +179,7 @@ def qualis (Autor_Info):
   # Coletando os dados da URL do todos
   response = requests.get(url_todos)
   dados_todos = response.json()
-  qualis_conferencias = pandas.DataFrame(dados_conf["data"], columns=["Sigla", "Conferencia", "Extrato_Capes"])
+  qualis_conferencias = pandas.DataFrame(dados_conf["data"], columns=["Sigla", "Conferencias", "Extrato_Capes"])
 
   qualis_periodico = pandas.DataFrame(dados_periodico["data"], columns=["ISSN", "Periodicos", "Extrato_Capes"])
 
@@ -220,7 +220,7 @@ def qualis (Autor_Info):
                 i['Qualis'] = str(filtered_df.iat[0,1])
                 #i['veiculo'] = str(filtered_df.iat[0,1])
                 i['inss'] = str(filtered_df.iat[0,0])
-                i['tipo_evento'] = 'Periódico'
+                i['tipo_evento'] = 'Periodico'
           else:
             if outr[1] >= 90:
                 df_mask=qualis_geral['Periodicos'] == str(outr[0])
@@ -228,7 +228,7 @@ def qualis (Autor_Info):
                 i['Qualis'] = str(filtered_df.iat[0,1])
                 #i['veiculo'] = str(filtered_df.iat[0,1])
                 i['inss'] = str(filtered_df.iat[0,0])
-                i['tipo_evento'] = 'Periódico' 
+                i['tipo_evento'] = 'Periodico' 
                 
             if conf[1] >= 90:
               print(conf[0])
@@ -237,7 +237,7 @@ def qualis (Autor_Info):
               i['Qualis'] = str(filtered_df.iat[0,1])
               #i['veiculo'] = str(filtered_df.iat[0,3])
               i['sigla'] = str(filtered_df.iat[0,0])
-              i['tipo_evento'] = 'Conferência'
+              i['tipo_evento'] = 'Conferencia'
 
   return Autor_Info     
 
@@ -575,17 +575,16 @@ def Executa():
     info = buscaInfo(autor,i)
     semantic = buscaSemantic(info)
     base_principal = qualis(semantic)
-    #tabela = gera_ontologia(base_principal)
-    tabela = base_principal
+    tabela = gera_ontologia(base_principal)
     teste = ''
     for c in info['interesse'] :  
       teste += c + ", "
     final_str = teste[:-2]
-    #soma = tabela["Pontuação"].sum()
+    soma = tabela["Pontuação"].sum()
     with st.container():
       st.write(pandas.DataFrame({
           'Autor': info['nome'], 
-          #'Pontuação qualis ': soma,
+          'Pontuação qualis ': soma,
           'Afiliação': info['afilicao'],
           'Interesses': final_str,
       },index=[0]).style.hide_index())
