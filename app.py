@@ -443,9 +443,9 @@ def gera_ontologia(base_principal):
     
   for x in range(len(base_principal['publicacao'])):
       titulo = base_principal['publicacao'][x]['title']
-      titulo_clean = re.sub('[,|\s]+', '_', clear_char(titulo))
+      titulo_clean = re.sub('[,|\s|-]+', '_', clear_char(titulo))
       veiculo =  base_principal['publicacao'][x]['veiculo']
-      veiculo_clean = re.sub('[,|\s]+', '_', clear_char( veiculo))
+      veiculo_clean = re.sub('[,|\s|-]+', '_', clear_char( veiculo))
       autoria = nome_autor_limpo +'_Autoria_'+str(x)
       publicacao = nome_autor_limpo +'_Publicacao_'+str(x)
      
