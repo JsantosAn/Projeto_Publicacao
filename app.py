@@ -125,11 +125,12 @@ def buscaSemantic(Autor_Info):
                          headers=headers)
                        
         data = r.json()
-        if data['message']:
-            return Autor_Info
-            break
-        else: 
-           if data['total'] >= 1:
+        
+        if data['total'] >= 1:
+          if data['message']:
+              return Autor_Info
+              break
+          else: 
               for x in data['data'][0]['authors']:
                           result = SequenceMatcher(None, x['name'],
                                   Autor_Info['nome']).ratio()
