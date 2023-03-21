@@ -128,7 +128,8 @@ def buscaSemantic(Autor_Info):
         if data['message']:
               return Autor_Info
               break
-        else data['total'] >= 1:
+        else :
+          if data['total'] >= 1:
        
               for x in data['data'][0]['authors']:
                           result = SequenceMatcher(None, x['name'],
