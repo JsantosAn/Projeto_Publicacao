@@ -207,7 +207,7 @@ def qualis (Autor_Info):
                                    qualis_geral['Periodicos'],
                                     scorer=fuzz.token_sort_ratio)
           conf = process.extractOne(i['veiculo'],
-                                    qualis_conferencias['Sigla'],
+                                    qualis_conferencias['Conferencia'],
                                     scorer=fuzz.token_set_ratio)
 
 
