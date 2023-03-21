@@ -126,30 +126,34 @@ def buscaSemantic(Autor_Info):
                        
         data = r.json()
         if data['total'] >= 1:
-          for x in data['data'][0]['authors']:
-                      result = SequenceMatcher(None, x['name'],
-                              Autor_Info['nome']).ratio()
-                      if result > 0.6:
-                          semantic_dados = sch.get_author(x['authorId'])
-          
-                          for t in Autor_Info['publicacao']:
-                              titulos.append(t['title'].lower())
-
-                          for t in semantic_dados['papers']:
-
-                              match = process.extract(t['title'].lower(), titulos,
-                                                      scorer=fuzz.token_sort_ratio)
-                              
-                              if match[0][1] < 60:
-                                  paperid = str(t['paperId'])
-                                  paper = sch.get_paper(paperid)
-                                  if int( paper['year']) >= year: 
-                                    Autor_Info['publicacao'].append({'title': paper['title'],
-                                            'pub_year': paper['year'], 'veiculo': paper['venue'
-                                            ]})
-                                  
-                      return Autor_Info
+          if existe 'message' in data:
+            return Autor_Info
                       break
+          else: 
+            for x in data['data'][0]['authors']:
+                        result = SequenceMatcher(None, x['name'],
+                                Autor_Info['nome']).ratio()
+                        if result > 0.6:
+                            semantic_dados = sch.get_author(x['authorId'])
+
+                            for t in Autor_Info['publicacao']:
+                                titulos.append(t['title'].lower())
+
+                            for t in semantic_dados['papers']:
+
+                                match = process.extract(t['title'].lower(), titulos,
+                                                        scorer=fuzz.token_sort_ratio)
+
+                                if match[0][1] < 60:
+                                    paperid = str(t['paperId'])
+                                    paper = sch.get_paper(paperid)
+                                    if int( paper['year']) >= year: 
+                                      Autor_Info['publicacao'].append({'title': paper['title'],
+                                              'pub_year': paper['year'], 'veiculo': paper['venue'
+                                              ]})
+
+                        return Autor_Info
+                        break
 
 def qualis (Autor_Info):
 
