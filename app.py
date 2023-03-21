@@ -127,7 +127,7 @@ def buscaSemantic(Autor_Info):
         data = r.json()
         if 'message' in data:
             return Autor_Info
-                      break
+            break
          
         else: 
           if data['total'] >= 1:
