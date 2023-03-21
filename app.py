@@ -178,11 +178,11 @@ def qualis (Autor_Info):
   # Coletando os dados da URL do todos
   response = requests.get(url_todos)
   dados_todos = response.json()
-  qualis_conferencias = pd.DataFrame(dados_conf["data"], columns=["Sigla", "Conferencia", "Extrato_Capes"])
+  qualis_conferencias = pandas.DataFrame(dados_conf["data"], columns=["Sigla", "Conferencia", "Extrato_Capes"])
 
-  qualis_periodico = pd.DataFrame(dados_periodico["data"], columns=["ISSN", "Periodicos", "Extrato_Capes"])
+  qualis_periodico = pandas.DataFrame(dados_periodico["data"], columns=["ISSN", "Periodicos", "Extrato_Capes"])
 
-  qualis_geral = pd.DataFrame(dados_todos["data"], columns=["ISSN", "Periodicos","Extrato_Capes_Comp","Extrato_Capes",'Area'])
+  qualis_geral = pandas.DataFrame(dados_todos["data"], columns=["ISSN", "Periodicos","Extrato_Capes_Comp","Extrato_Capes",'Area'])
 
   pr = pandas.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vR5Yh4bVduc_8klLjiqyDjHnJJNrN-apypzu_lAVp4criAM-ATkwqifaRkO_jEvm41yu76H09ZXuqWN/pub?output=csv')
   #_pr['Área de Avaliação'] = _pr['Área de Avaliação'].str.strip()
