@@ -232,7 +232,7 @@ def qualis (Autor_Info):
                 
             if conf[1] >= 90:
               print(conf[0])
-              df_mask=qualis_conferencias['Sigla'] == str(conf[0])
+              df_mask=qualis_conferencias['Conferencias'] == str(conf[0])
               filtered_df = qualis_conferencias[df_mask]
               i['Qualis'] = str(filtered_df.iat[0,2])
               #i['veiculo'] = str(filtered_df.iat[0,3])
