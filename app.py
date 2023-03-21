@@ -545,9 +545,9 @@ def gera_ontologia(base_principal):
          
 
   data_qualis = pandas.DataFrame(data=p)
-  #s = g.serialize(format='turtle')
-  #with open("Ontologia_Publicacao"+".ttl", 'w') as f:
-     # f.write(s)
+  s = g.serialize(format='ttl')
+  with open("Ontologia_Publicacao"+".ttl", 'w') as f:
+      f.write(s)
   return data_qualis    
 
 def convert_df(df):
