@@ -163,8 +163,26 @@ def qualis (Autor_Info):
   year = int(date.strftime("%Y")) - 5
 
 
+  url_conf = 'https://qualis.ic.ufmt.br/qualis_conferencias_2016.json'
+  url_periodico = 'https://qualis.ic.ufmt.br/periodico.json'
+  url_todos = 'https://qualis.ic.ufmt.br/todos2.json'
 
+  # Coletando os dados da URL do qualis
+  response = requests.get(url_conf)
+  dados_conf = response.json()
 
+  # Coletando os dados da URL do periódico
+  response = requests.get(url_periodico)
+  dados_periodico = response.json()
+
+  # Coletando os dados da URL do todos
+  response = requests.get(url_todos)
+  dados_todos = response.json()
+  qualis_conferencias = pd.DataFrame(dados_conf["data"], columns=["Sigla", "Conferencia", "Extrato_Capes"])
+
+  qualis_periodico = pd.DataFrame(dados_periodico["data"], columns=["ISSN", "Periodicos", "Extrato_Capes"])
+
+  qualis_geral = pd.DataFrame(dados_todos["data"], columns=["ISSN", "Periodicos","Extrato_Capes_Comp","Extrato_Capes",'Area'])
 
   pr = pandas.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vR5Yh4bVduc_8klLjiqyDjHnJJNrN-apypzu_lAVp4criAM-ATkwqifaRkO_jEvm41yu76H09ZXuqWN/pub?output=csv')
   #_pr['Área de Avaliação'] = _pr['Área de Avaliação'].str.strip()
@@ -179,42 +197,16 @@ def qualis (Autor_Info):
 
 
 
-
-
-
-
-  #conferencia_link = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTZsntDnttAWGHA8NZRvdvK5A_FgOAQ_tPMzP7UUf-CHwF_3PHMj_TImyXN2Q_Tmcqm2MqVknpHPoT2/pubhtml?gid=0&single=true'
-  #res = requests.get(conferencia_link)
-  #soup = BeautifulSoup(res.content, 'lxml')
-  #conferencias = pandas.read_html(str(soup))
-  #c = {'sigla': conferencias[0]['Unnamed: 1'],
-      #    'conferencia': conferencias[0]['Unnamed: 2'],
-       #   'Qualis_Final': conferencias[0]['Unnamed: 7']}
-  #cn = pandas.DataFrame(data=c)
-
-  #cn = pandas.DataFrame(data=c).dropna()
-
-  #cn = cn.drop(0)
- # pr = pr.drop(0)
-
-  #custom_pipeline = [preprocessing.fillna, 
-                        #preprocessing.lowercase,
-                        #preprocessing.remove_whitespace,
-                       # preprocessing.remove_punctuation]
-  #cn['conferencia_limpo'] = hero.clean(cn['conferencia'],
-              #custom_pipeline)
-  #pr['periodicos_limpo'] = hero.clean(pr['Título'],
-              #custom_pipeline)
-
-
-
   for i in Autor_Info['publicacao']:
           
           peri = process.extractOne(i['veiculo'],
-                                   pr['periodico'],
+                                   qualis_periodico['Periodicos'],
+                                    scorer=fuzz.token_sort_ratio)
+          outr = process.extractOne(i['veiculo'],
+                                   qualis_geral['Periodicos'],
                                     scorer=fuzz.token_sort_ratio)
           conf = process.extractOne(i['veiculo'],
-                                    cn['sigla'],
+                                    qualis_conferencias['Sigla'],
                                     scorer=fuzz.token_set_ratio)
 
 
@@ -222,21 +214,29 @@ def qualis (Autor_Info):
           if peri[1] > conf[1] : 
             print(peri[0])
             if peri[1] >= 90:
-                df_mask=pr['periodico'] == str(peri[0])
-                filtered_df = pr[df_mask]
+                df_mask=qualis_periodico['Periodicos'] == str(peri[0])
+                filtered_df = qualis_periodico[df_mask]
                 i['Qualis'] = str(filtered_df.iat[0,5])
                 #i['veiculo'] = str(filtered_df.iat[0,1])
                 i['inss'] = str(filtered_df.iat[0,0])
-                i['tipo_evento'] = 'periodico'
+                i['tipo_evento'] = 'Periódico'
           else:
+            if outr[1] >= 90:
+                df_mask=qualis_geral['Periodicos'] == str(outr[0])
+                filtered_df = qualis_geral[df_mask]
+                i['Qualis'] = str(filtered_df.iat[0,5])
+                #i['veiculo'] = str(filtered_df.iat[0,1])
+                i['inss'] = str(filtered_df.iat[0,0])
+                i['tipo_evento'] = 'Periódico' 
+                
             if conf[1] >= 90:
               print(conf[0])
-              df_mask=cn['sigla'] == str(conf[0])
-              filtered_df = cn[df_mask]
+              df_mask=qualis_conferencias['Sigla'] == str(conf[0])
+              filtered_df = qualis_conferencias[df_mask]
               i['Qualis'] = str(filtered_df.iat[0,6])
               #i['veiculo'] = str(filtered_df.iat[0,3])
               i['sigla'] = str(filtered_df.iat[0,0])
-              i['tipo_evento'] = 'conferencia'
+              i['tipo_evento'] = 'Conferência'
 
   return Autor_Info     
 
