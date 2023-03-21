@@ -581,7 +581,7 @@ def Executa():
     for c in info['interesse'] :  
       teste += c + ", "
     final_str = teste[:-2]
-    soma = tabela["Pontuação"].sum()
+    #soma = tabela["Pontuação"].sum()
     with st.container():
       st.write(pandas.DataFrame({
           'Autor': info['nome'], 
