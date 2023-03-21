@@ -581,10 +581,10 @@ def Executa():
       teste += c + ", "
     final_str = teste[:-2]
     #soma = tabela["Pontuação"].sum()
+    #'Pontuação qualis ': soma,
     with st.container():
       st.write(pandas.DataFrame({
           'Autor': info['nome'], 
-          #'Pontuação qualis ': soma,
           'Afiliação': info['afilicao'],
           'Interesses': final_str,
       },index=[0]).style.hide_index())
