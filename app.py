@@ -585,7 +585,7 @@ def Executa():
     with st.container():
       st.write(pandas.DataFrame({
           'Autor': info['nome'], 
-          'Pontuação qualis ': soma,
+          #'Pontuação qualis ': soma,
           'Afiliação': info['afilicao'],
           'Interesses': final_str,
       },index=[0]).style.hide_index())
