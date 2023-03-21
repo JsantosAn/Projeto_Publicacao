@@ -575,8 +575,8 @@ def Executa():
     info = buscaInfo(autor,i)
     semantic = buscaSemantic(info)
     base_principal = qualis(semantic)
-    tabela = gera_ontologia(base_principal)
-   
+    #tabela = gera_ontologia(base_principal)
+    tabela = base_principal
     teste = ''
     for c in info['interesse'] :  
       teste += c + ", "
