@@ -216,7 +216,7 @@ def qualis (Autor_Info):
             if peri[1] >= 90:
                 df_mask=qualis_periodico['Periodicos'] == str(peri[0])
                 filtered_df = qualis_periodico[df_mask]
-                i['Qualis'] = str(filtered_df.iat[0,5])
+                i['Qualis'] = str(filtered_df.iat[0,1])
                 #i['veiculo'] = str(filtered_df.iat[0,1])
                 i['inss'] = str(filtered_df.iat[0,0])
                 i['tipo_evento'] = 'Periódico'
@@ -224,7 +224,7 @@ def qualis (Autor_Info):
             if outr[1] >= 90:
                 df_mask=qualis_geral['Periodicos'] == str(outr[0])
                 filtered_df = qualis_geral[df_mask]
-                i['Qualis'] = str(filtered_df.iat[0,5])
+                i['Qualis'] = str(filtered_df.iat[0,1])
                 #i['veiculo'] = str(filtered_df.iat[0,1])
                 i['inss'] = str(filtered_df.iat[0,0])
                 i['tipo_evento'] = 'Periódico' 
@@ -233,7 +233,7 @@ def qualis (Autor_Info):
               print(conf[0])
               df_mask=qualis_conferencias['Sigla'] == str(conf[0])
               filtered_df = qualis_conferencias[df_mask]
-              i['Qualis'] = str(filtered_df.iat[0,6])
+              i['Qualis'] = str(filtered_df.iat[0,1])
               #i['veiculo'] = str(filtered_df.iat[0,3])
               i['sigla'] = str(filtered_df.iat[0,0])
               i['tipo_evento'] = 'Conferência'
