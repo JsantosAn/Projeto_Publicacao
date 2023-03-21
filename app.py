@@ -578,7 +578,7 @@ def Executa():
     info = buscaInfo(autor,i)
     semantic = buscaSemantic(info)
     base_principal = qualis(semantic)
-    #tabela = gera_ontologia(base_principal)
+    tabela = gera_ontologia(base_principal)
     teste = ''
     for c in info['interesse'] :  
       teste += c + ", "
@@ -591,7 +591,7 @@ def Executa():
           'Afiliação': info['afilicao'],
           'Interesses': final_str,
       },index=[0]).style.hide_index())
-      st.table(base_principal)
+      st.table(tabela)
       csv = convert_df(tabela)
 
       st.download_button(
