@@ -125,7 +125,7 @@ def buscaSemantic(Autor_Info):
                          headers=headers)
                        
         data = r.json()
-        if existe 'message' in data:
+        if 'message' in data:
             return Autor_Info
                       break
          
