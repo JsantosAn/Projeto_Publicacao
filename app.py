@@ -591,8 +591,11 @@ def Executa():
           'Afiliação': info['afilicao'],
           'Interesses': final_str,
       },index=[0]).style.hide_index())
-      st.table(tabela)
+      #st.table(tabela)
+      
       csv = convert_df(tabela)
+      csv.sort_values(by='Ano', ascending=False)
+      st.dataframe(csv, use_container_width=True)
 
       st.download_button(
       label="Download data as CSV",
