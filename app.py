@@ -593,7 +593,7 @@ def Executa():
       },index=[0]).style.hide_index())
       #st.table(tabela)      
       csv = convert_df(tabela)
-      tabela= pd.DataFrame(tabela)
+      tabela= pandas.DataFrame(tabela)
       tabela.sort_values(by='Ano', ascending=False)
       st.dataframe(tabela, use_container_width=True)
 
