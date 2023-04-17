@@ -610,7 +610,7 @@ def Executa():
     csv = convert_df(tabela)
     tabela= pandas.DataFrame(tabela)
     tabela.sort_values(by='Ano', ascending=False)
-    st.dataframe(tabela.sort_values(by='Ano', ascending=False), use_container_width=True)
+    st.dataframe(tabela.sort_values(by='Ano', ascending=False).reset_index(drop=True), use_container_width=True)
     st.divider() 
     st.download_button(
         label="Download data as CSV",
