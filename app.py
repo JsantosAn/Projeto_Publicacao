@@ -28,7 +28,7 @@ from scholarly import scholarly
 
 
 
-@st.cache_data(allow_output_mutation=True)
+@st.cache(allow_output_mutation=True)
 def buscaScholar(autor):
   dados = []
   search_query = scholarly.search_author(autor)
