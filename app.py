@@ -574,30 +574,30 @@ def Executa():
   st.divider()  
   st.sidebar.subheader("Buscador")
   Autor = st.sidebar.text_input(label='Nome do Pesquisador')
-  autor = buscaScholar(Autor)
+  with st.spinner('Buscando Autores...'):
+    autor = buscaScholar(Autor)
   for x in range(len(autor)):
     autor_name.append(autor[x]['name'])
   escolha = st.sidebar.selectbox('Pesquisadores', autor_name) 
   
-  if st.sidebar.button(label='Buscar'):
-   with st.spinner('Buscando informações...'):
-    i = autor_name.index(escolha)
-    info = buscaInfo(autor,i)
-    semantic = buscaSemantic(info)
-    base_principal = qualis(semantic)
-    tabela = gera_ontologia(base_principal)
-    teste = ''
-    for c in info['interesse'] :  
-      teste += c + ", "
-    final_str = teste[:-2]
-    soma = tabela["Pontuação"].sum()
-   
+  def buscar_info_autor(escolha):
+    with st.spinner('Buscando informações...'):
+        i = autor_name.index(escolha)
+        info = buscaInfo(autor,i)
+        semantic = buscaSemantic(info)
+        base_principal = qualis(semantic)
+        tabela = gera_ontologia(base_principal)
+        tabela.sort_values(by='Ano', ascending=False, inplace=True)
+        csv = convert_df(tabela)
+        return info, tabela, csv
+  
+  def mostrar_info_tabela(info, tabela, csv):
     st.subheader(info['nome'])
     informacoes= info['interesse']
     kpi1, kpi2, kpi3 = st.columns(3)
     with kpi1:
         st.markdown("<h3 style='text-align: center;font-size: 20px;'>Pontuação Qualis</h3>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center;font-size: 30px;'>{}</p>".format(soma), unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center;font-size: 30px;'>{}</p>".format(tabela["Pontuação"].sum()), unsafe_allow_html=True)
 
     with kpi2:
         st.markdown("<h3 style= 'text-align: center;font-size: 20px;'>Afiliação</h3>", unsafe_allow_html=True)
@@ -608,10 +608,7 @@ def Executa():
         for info in informacoes:
             st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info), unsafe_allow_html=True)
 
-    csv = convert_df(tabela)
-    tabela= pandas.DataFrame(tabela)
-    tabela.sort_values(by='Ano', ascending=False)
-    st.dataframe(tabela.sort_values(by='Ano', ascending=False).reset_index(drop=True), use_container_width=True)
+    st.dataframe(tabela.reset_index(drop=True), use_container_width=True)
     st.divider() 
     st.download_button(
         label="Download data as CSV",
@@ -619,6 +616,9 @@ def Executa():
         file_name='Artigos_Qualis.csv',
         mime='text/csv',)
   
+  if st.sidebar.button(label='Buscar'):
+    info, tabela, csv = buscar_info_autor(escolha)
+    mostrar_info_tabela(info, tabela, csv)
   
     
     
