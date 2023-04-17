@@ -599,12 +599,12 @@ def Executa():
 
     with kpi2:
         st.markdown("<h3 style= 'text-align: center;font-size: 20px;'>Afiliação</h3>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info), unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info['afilicao']), unsafe_allow_html=True)
 
     with kpi3:
         st.markdown("<h3 style='text-align: center;font-size: 20px;'>Interesses</h3>", unsafe_allow_html=True)
         for info in informacoes:
-            st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info['afilicao']), unsafe_allow_html=True)
+            st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info), unsafe_allow_html=True)
 
     csv = convert_df(tabela)
     tabela= pandas.DataFrame(tabela)
