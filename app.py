@@ -564,6 +564,8 @@ def Executa():
 
   autor= []
   autor_name = []
+  info = []
+  soma = 0
 
   col1, col2 = st.columns([1, 3])
   st.title('Integração de Dados de Publicações Científicas')
