@@ -561,6 +561,7 @@ def convert_df(df):
 
 
 def Executa():
+  st.set_page_config(layout="wide",  initial_sidebar_state='expanded')
 
   autor= []
   autor_name = []
@@ -609,7 +610,7 @@ def Executa():
     csv = convert_df(tabela)
     tabela= pandas.DataFrame(tabela)
     tabela.sort_values(by='Ano', ascending=False)
-    st.dataframe(tabela)
+    st.dataframe(tabela, use_container_width=True)
    # st.divider() 
     st.download_button(
         label="Download data as CSV",
