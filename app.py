@@ -568,7 +568,7 @@ def Executa():
   col1, col2 = st.columns([1, 3])
   st.title('Integração de Dados de Publicações Científicas')
   st.write('Este protótipo apresenta os resultados de uma integração de dados no campo das publicações científicas, que utiliza uma abordagem orientada a modelo. Com ele, é possível buscar e visualizar informações sobre autores e seus artigos publicados nos últimos cinco anos, juntamente com a nota Qualis atribuída a cada um. Com isso, a ferramenta oferece uma maneira rápida e eficiente de se manter atualizado sobre as publicações mais recentes de um autor e sua relevância na área de pesquisa.')
-  st.divider()  # 👈 Draws a horizontal rule
+  st.divider()  
   st.sidebar.subheader("Buscador")
   Autor = st.sidebar.text_input(label='Nome do Pesquisador')
   autor = buscaScholar(Autor)
