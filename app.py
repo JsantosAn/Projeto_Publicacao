@@ -566,13 +566,16 @@ def Executa():
   autor_name = []
 
   col1, col2 = st.columns([1, 3])
-
+  st.title('Integração de Dados de Publicações Científicas')
+  st.write('Este protótipo apresenta os resultados de uma integração de dados no campo das publicações científicas, que utiliza uma abordagem orientada a modelo. Com ele, é possível buscar e visualizar informações sobre autores e seus artigos publicados nos últimos cinco anos, juntamente com a nota Qualis atribuída a cada um. Com isso, a ferramenta oferece uma maneira rápida e eficiente de se manter atualizado sobre as publicações mais recentes de um autor e sua relevância na área de pesquisa.')
+  st.divider()  # 👈 Draws a horizontal rule
   st.sidebar.subheader("Buscador")
   Autor = st.sidebar.text_input(label='Nome do Pesquisador')
   autor = buscaScholar(Autor)
   for x in range(len(autor)):
     autor_name.append(autor[x]['name'])
   escolha = st.sidebar.selectbox('Pesquisadores', autor_name) 
+  
   if st.sidebar.button(label='Buscar'):
     i = autor_name.index(escolha)
     info = buscaInfo(autor,i)
@@ -585,24 +588,34 @@ def Executa():
     final_str = teste[:-2]
     soma = tabela["Pontuação"].sum()
    
-    with st.container():
-      st.write(pandas.DataFrame({
-          'Autor': info['nome'],  
-          'Pontuação qualis ': soma,
-          'Afiliação': info['afilicao'],
-          'Interesses': final_str,
-      },index=[0]).style.hide_index())
-      #st.table(tabela)      
-      csv = convert_df(tabela)
-      tabela= pandas.DataFrame(tabela)
-      tabela.sort_values(by='Ano', ascending=False)
-      st.dataframe(tabela)
+  st.subheader(info['nome'])
+  informacoes= info['interesse']
+  kpi1, kpi2, kpi3 = st.columns(3)
+  with kpi1:
+      st.markdown("<h3 style='text-align: center;font-size: 20px;'>Pontuação Qualis</h3>", unsafe_allow_html=True)
+      st.markdown("<p style='text-align: center;font-size: 30px;'>{}</p>".format(soma), unsafe_allow_html=True)
 
-      st.download_button(
+  with kpi2:
+      st.markdown("<h3 style= 'text-align: center;font-size: 20px;'>Afiliação</h3>", unsafe_allow_html=True)
+      st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info), unsafe_allow_html=True)
+
+  with kpi3:
+      st.markdown("<h3 style='text-align: center;font-size: 20px;'>Interesses</h3>", unsafe_allow_html=True)
+      for info in informacoes:
+          st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info['afilicao']), unsafe_allow_html=True)
+  
+  csv = convert_df(tabela)
+  tabela= pandas.DataFrame(tabela)
+  tabela.sort_values(by='Ano', ascending=False)
+  st.dataframe(tabela, use_container_width= True )
+  st.divider() 
+  st.download_button(
       label="Download data as CSV",
       data=csv,
       file_name='Artigos_Qualis.csv',
       mime='text/csv',)
+  
+  
     
     
     
