@@ -590,32 +590,32 @@ def Executa():
     final_str = teste[:-2]
     soma = tabela["Pontuação"].sum()
    
-  st.subheader(info['nome'])
-  informacoes= info['interesse']
-  kpi1, kpi2, kpi3 = st.columns(3)
-  with kpi1:
-      st.markdown("<h3 style='text-align: center;font-size: 20px;'>Pontuação Qualis</h3>", unsafe_allow_html=True)
-      st.markdown("<p style='text-align: center;font-size: 30px;'>{}</p>".format(soma), unsafe_allow_html=True)
+    st.subheader(info['nome'])
+    informacoes= info['interesse']
+    kpi1, kpi2, kpi3 = st.columns(3)
+    with kpi1:
+        st.markdown("<h3 style='text-align: center;font-size: 20px;'>Pontuação Qualis</h3>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center;font-size: 30px;'>{}</p>".format(soma), unsafe_allow_html=True)
 
-  with kpi2:
-      st.markdown("<h3 style= 'text-align: center;font-size: 20px;'>Afiliação</h3>", unsafe_allow_html=True)
-      st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info), unsafe_allow_html=True)
+    with kpi2:
+        st.markdown("<h3 style= 'text-align: center;font-size: 20px;'>Afiliação</h3>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info), unsafe_allow_html=True)
 
-  with kpi3:
-      st.markdown("<h3 style='text-align: center;font-size: 20px;'>Interesses</h3>", unsafe_allow_html=True)
-      for info in informacoes:
-          st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info['afilicao']), unsafe_allow_html=True)
-  
-  csv = convert_df(tabela)
-  tabela= pandas.DataFrame(tabela)
-  tabela.sort_values(by='Ano', ascending=False)
-  st.dataframe(tabela, use_container_width= True )
- # st.divider() 
-  st.download_button(
-      label="Download data as CSV",
-      data=csv,
-      file_name='Artigos_Qualis.csv',
-      mime='text/csv',)
+    with kpi3:
+        st.markdown("<h3 style='text-align: center;font-size: 20px;'>Interesses</h3>", unsafe_allow_html=True)
+        for info in informacoes:
+            st.markdown("<p style='text-align: center;font-size: 20px;'>{}</p>".format(info['afilicao']), unsafe_allow_html=True)
+
+    csv = convert_df(tabela)
+    tabela= pandas.DataFrame(tabela)
+    tabela.sort_values(by='Ano', ascending=False)
+    st.dataframe(tabela, use_container_width= True )
+   # st.divider() 
+    st.download_button(
+        label="Download data as CSV",
+        data=csv,
+        file_name='Artigos_Qualis.csv',
+        mime='text/csv',)
   
   
     
