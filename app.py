@@ -580,6 +580,7 @@ def Executa():
   escolha = st.sidebar.selectbox('Pesquisadores', autor_name) 
   
   if st.sidebar.button(label='Buscar'):
+   with st.spinner('Buscando informações...'):
     i = autor_name.index(escolha)
     info = buscaInfo(autor,i)
     semantic = buscaSemantic(info)
