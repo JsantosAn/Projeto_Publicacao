@@ -597,7 +597,7 @@ def Executa():
     kpi1, kpi2, kpi3 = st.columns(3)
     with kpi1:
         st.markdown("<h3 style='text-align: center;font-size: 20px;'>Pontuação Qualis</h3>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center;font-size: 30px;'>{}</p>".format(tabela["Pontuação"].sum()), unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center;font-size: 30px;'>{}</p>".format( round(tabela["Pontuação"].sum(), 2)), unsafe_allow_html=True)
 
     with kpi2:
         st.markdown("<h3 style= 'text-align: center;font-size: 20px;'>Afiliação</h3>", unsafe_allow_html=True)
